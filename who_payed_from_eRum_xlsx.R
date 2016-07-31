@@ -1,9 +1,12 @@
 library(magrittr)
 library(openxlsx)
 library(stringi)
-read.xlsx('data/eRum.xlsx', rows = 13:69) -> eRum
+read.xlsx('data/eRum.xlsx', rows = 11:605) -> eRum
 
-eRum[!grepl("OPŁ.BANK.|ZLECONE", eRum[, 1]), ] %>%
+eRum[c((1:148)*4-1), ] -> eRum
+
+
+eRum[!grepl("OPŁ.BANK.|ZLECONE", eRum) ] %>%
   gsub(pattern = "[0-9,-]|/EUR/|WB|ERUM|EUR|eRUM|eRum|WORKSHOP", "", .) %>%
   stri_extract_all_words() %>%
   lapply(paste, collapse = " ") %>%
